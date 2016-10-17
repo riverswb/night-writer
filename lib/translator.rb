@@ -22,7 +22,7 @@ class Translator
     arr << braille_1 + "\n"
     arr << braille_2 + "\n"
     arr << braille_3 + "\n"
-    arr.to_s
+    arr
   end
 
   def braille_to_english(letter)
@@ -38,8 +38,6 @@ class Translator
     	value[2] == letter[2]
       # binding.pry
     end.to_h.keys.to_s
-
-    puts third
   end
 
 end
