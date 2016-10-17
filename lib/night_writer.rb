@@ -6,13 +6,10 @@ class NightWriter
   attr_reader :reader, :translator, :output, :writer
 
   def initialize
-    @output = output
-  end
-
-  def initialize
     @reader = FileReader.new
     @translator = Translator.new
     @writer = FileWriter.new
+    @output = output
   end
 
   def read_file_length
@@ -20,17 +17,17 @@ class NightWriter
   end
 
   def read_file
-    reader.read
-  end
-
-  def translate_english_to_braille
-    input = reader.read.chomp.gsub(/[^\p{Alnum}\p{Space}-]/, '')
-    @output = translator.english_to_braille(input)
-    write_to_file
+    reader.read.chomp.gsub(/[^\p{Alnum}\p{Space}-]/, '')
   end
 
   def write_to_file
     writer.write(output)
+  end
+
+  def translate_english_to_braille
+    input = read_file
+    @output = translator.english_to_braille(input)
+    # write_to_file
   end
 
 end
