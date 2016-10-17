@@ -7,6 +7,7 @@ class Translator
   end
 
   def english_to_braille(string)
+    arr = []
     braille_1 = string.chars.map do |letter|
     	alphabet.lowercase[letter][0]
     end.join
@@ -15,13 +16,13 @@ class Translator
     	alphabet.lowercase[letter][1]
     end.join
 
-    p braille_1
-    p braille_2
-
     braille_3 = string.chars.map do |letter|
     	alphabet.lowercase[letter][2]
     end.join
-
+    arr << braille_1 + "\n"
+    arr << braille_2 + "\n"
+    arr << braille_3 + "\n"
+    arr.to_s
   end
 
   def braille_to_english(letter)
