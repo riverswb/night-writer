@@ -11,23 +11,25 @@ class Translator
   end
 
   def english_to_braille(input)
-    braille_sentence = []
     braille_1 = input.chars.map do |thing|
     	alphabet.alphanumeric[thing][0]
     end.join
-
     braille_2 = input.chars.map do |thing|
     	alphabet.alphanumeric[thing][1]
     end.join
-
     braille_3 = input.chars.map do |thing|
     	alphabet.alphanumeric[thing][2]
     end.join
-    braille_sentence << braille_1
-    braille_sentence << braille_2
-    braille_sentence << braille_3
-    braille_sentence
+    compile_braille_sentence(braille_1, braille_2, braille_3)
   end
+
+    def compile_braille_sentence(braille_1, braille_2, braille_3)
+      braille_sentence = []
+      braille_sentence << braille_1
+      braille_sentence << braille_2
+      braille_sentence << braille_3
+      braille_sentence
+    end
 
   def braille_to_english(input)
     @work = input
@@ -40,8 +42,8 @@ class Translator
     prepare_braille_arrays
     while letters[0].empty? == false do
       answer = []
-      @letters.each do |poo|
-        answer << poo.slice!(0,2).join
+      @letters.each do |letter|
+        answer << letter.slice!(0,2).join
       end
       @answers << answer
     end
@@ -69,8 +71,9 @@ class Translator
     end
   end
 
+
   def upcase_shift_letters
-    sentence = english_sentence.each_with_index do |letter, index|
+    english_sentence.each_with_index do |letter, index|
       if letter == "shift"
         english_sentence[index + 1].upcase!
         english_sentence.delete_at(index)

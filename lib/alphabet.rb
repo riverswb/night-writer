@@ -1,7 +1,7 @@
 class Alphabet
-
-def alphanumeric
-        characters = {
+  attr_accessor   :alphanumeric, :braille
+def initialize
+        @alphanumeric = {
                     "a" => ["0.","..",".."],
                     "b" => ["0.","0.",".."],
                     "c" => ["00","..",".."],
@@ -74,5 +74,16 @@ def alphanumeric
                     # "8" => ["0.","00",".."],
                     # "9" => [".0","0.",".."]
                   }
+
+                  # @braille = {[".0",".0","00"] => "#" }
 end
+
+  def translator(hash, char)
+    # binding.pry
+    hash[char]
+  end
+
+
+
 end
+# puts Alphabet.new.translator(braille, [".0",".0","00"])
