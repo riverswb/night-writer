@@ -2,13 +2,9 @@ require './lib/alphabet'
 
 
 class Translator
-  attr_reader :alphabet, :work, :letters, :answers, :english_sentence
+  attr_reader :alphabet, :answers
   def initialize
     @alphabet = Alphabet.new
-    @work = work
-    @letters = []
-    @answers = []
-    @english_sentence = []
   end
 
   def english_to_braille(input)
@@ -33,28 +29,30 @@ class Translator
     end
 
   def braille_to_english(input)
-    @work = input
-    letters = braille_converter
+    letters = braille_converter(input)
     output = compile_english_sentence_from_braille(letters)
     upcase_shift_letters(output)
   end
 
-  def braille_converter
-    prepare_braille_arrays
+  def braille_converter(input)
+    letters = prepare_braille_arrays(input)
+    answers = []
     while letters[0].empty? == false do
       answer = []
-      @letters.each do |letter|
+      letters.each do |letter|
         answer << letter.slice!(0,2).join
       end
-      @answers << answer
+      answers << answer
     end
-    @answers
+    answers
   end
 
-  def prepare_braille_arrays
-    @letters << @work.split("\n")[0].chars
-    @letters << @work.split("\n")[1].chars
-    @letters << @work.split("\n")[2].chars
+  def prepare_braille_arrays(input)
+    letters = []
+    letters << input.split("\n")[0].chars
+    letters << input.split("\n")[1].chars
+    letters << input.split("\n")[2].chars
+    letters
   end
 
   def compile_english_sentence_from_braille(letters)
@@ -75,6 +73,3 @@ class Translator
     end
   end
 end
-
-# Translator.new.english_to_braille("Brett and Mike")
-# Translator.new.braille_to_english(["0.","0.",".."])
