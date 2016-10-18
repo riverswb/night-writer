@@ -12,27 +12,49 @@ class Translator
 
   def english_to_braille(input)
     braille_sentence = []
-    braille_1 = input.chars.map do |letter|
-    	alphabet.alphanumeric[letter][0]
+    braille_1 = input.chars.map do |thing|
+    	alphabet.alphanumeric[thing][0]
     end.join
 
-    braille_2 = input.chars.map do |letter|
-    	alphabet.alphanumeric[letter][1]
+    braille_2 = input.chars.map do |thing|
+    	alphabet.alphanumeric[thing][1]
     end.join
 
-    braille_3 = input.chars.map do |letter|
-    	alphabet.alphanumeric[letter][2]
+    braille_3 = input.chars.map do |thing|
+    	alphabet.alphanumeric[thing][2]
     end.join
     braille_sentence << braille_1
     braille_sentence << braille_2
     braille_sentence << braille_3
-    binding.pry
     braille_sentence
   end
 
   def braille_to_english(input)
     @work = input
     letters = braille_converter
+    compile_english_sentence_from_braille(letters)
+    upcase_shift_letters
+  end
+
+  def braille_converter
+    prepare_braille_arrays
+    while letters[0].empty? == false do
+      answer = []
+      @letters.each do |poo|
+        answer << poo.slice!(0,2).join
+      end
+      @answers << answer
+    end
+    @answers
+  end
+
+  def prepare_braille_arrays
+    @letters << @work.split("\n")[0].chars
+    @letters << @work.split("\n")[1].chars
+    @letters << @work.split("\n")[2].chars
+  end
+
+  def compile_english_sentence_from_braille(letters)
     letters.each do |letter|
       first = alphabet.alphanumeric.find_all do |key, value|
       	value[0] == letter[0]
@@ -45,32 +67,17 @@ class Translator
       end.to_h.keys.to_s
       @english_sentence << third.gsub(/[^\p{Alnum}\p{Space}!',-.?#]/, '')
     end
-    sentence = []
-    english_sentence.each_with_index do |letter, index|
+  end
+
+  def upcase_shift_letters
+    sentence = english_sentence.each_with_index do |letter, index|
       if letter == "shift"
         english_sentence[index + 1].upcase!
         english_sentence.delete_at(index)
       else
-        sentence << letter
-      # binding.pry
-    end
-    sentence
-end
-
-  end
-
-  def braille_converter
-    @letters << @work.split("\n")[0].chars
-    @letters << @work.split("\n")[1].chars
-    @letters << @work.split("\n")[2].chars
-    while letters[0].empty? == false do
-      answer = []
-      @letters.each do |poo|
-        answer << poo.slice!(0,2).join
+        letter
       end
-      @answers << answer
     end
-    @answers
   end
 end
 
