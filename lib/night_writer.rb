@@ -25,7 +25,7 @@ class NightWriter
   end
 
   def translate_english_to_braille
-    input = read_file.chomp.gsub(/[^\p{Alnum}\p{Space}-]/, '')
+    input = read_file.chomp.gsub(/[^\p{Alnum}\p{Space}!',-.?#]/, '')
     @output = translator.english_to_braille(input)
     write_to_file_braille
   end

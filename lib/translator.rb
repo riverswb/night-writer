@@ -43,7 +43,7 @@ class Translator
       third = second.find_all do |key, value|
       	value[2] == letter[2]
       end.to_h.keys.to_s
-      @english_sentence << third.gsub(/[^\p{Alnum}\p{Space}-]/, '')
+      @english_sentence << third.gsub(/[^\p{Alnum}\p{Space}!',-.?#]/, '')
     end
     sentence = []
     english_sentence.each_with_index do |letter, index|
