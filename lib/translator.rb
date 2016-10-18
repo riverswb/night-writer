@@ -35,8 +35,8 @@ class Translator
   def braille_to_english(input)
     @work = input
     letters = braille_converter
-    compile_english_sentence_from_braille(letters)
-    upcase_shift_letters
+    output = compile_english_sentence_from_braille(letters)
+    upcase_shift_letters(output)
   end
 
   def braille_converter
@@ -58,26 +58,17 @@ class Translator
   end
 
   def compile_english_sentence_from_braille(letters)
-    letters.each do |letter|
-      first = alphabet.alphanumeric.find_all do |key, value|
-      	value[0] == letter[0]
-      end.to_h
-      second = first.find_all do |key, value|
-      	value[1] == letter[1]
-      end.to_h
-      third = second.find_all do |key, value|
-      	value[2] == letter[2]
-      end.to_h.keys.to_s
-      @english_sentence << third.gsub(/[^\p{Alnum}\p{Space}!',-.?#]/, '')
+    letters.map do |letter|
+      alphabet.braille[letter]
     end
   end
 
 
-  def upcase_shift_letters
-    english_sentence.each_with_index do |letter, index|
+  def upcase_shift_letters(output)
+    output.each_with_index do |letter, index|
       if letter == "shift"
-        english_sentence[index + 1].upcase!
-        english_sentence.delete_at(index)
+        output[index + 1].upcase!
+        output.delete_at(index)
       else
         letter
       end
