@@ -1,10 +1,13 @@
 require './lib/alphabet'
 
 class Translator
-  attr_reader :alphabet, :work
+  attr_reader :alphabet, :work, :letters, :answers, :english_sentence
   def initialize
     @alphabet = Alphabet.new
     @work = work
+    @letters = []
+    @answers = []
+    @english_sentence = []
   end
 
   def english_to_braille(input)
@@ -29,35 +32,37 @@ class Translator
 
   def braille_to_english(input)
     @work = input
-    letter = braille_converter
-    first = alphabet.alphanumeric.find_all do |key, value|
-    	value[0] == letter[0]
-    end.to_h
-    second = first.find_all do |key, value|
-    	value[1] == letter[1]
-    end.to_h
-    third = second.find_all do |key, value|
-    	value[2] == letter[2]
-    end.to_h.keys.to_s
-    binding.pry
-    
+    letters = braille_converter
+    letters.each do |letter|
+      first = alphabet.alphanumeric.find_all do |key, value|
+      	value[0] == letter[0]
+      end.to_h
+      second = first.find_all do |key, value|
+      	value[1] == letter[1]
+      end.to_h
+      third = second.find_all do |key, value|
+      	value[2] == letter[2]
+      end.to_h.keys.to_s
+      @english_sentence << third.gsub(/[^\p{Alnum}\p{Space}-]/, '')
+    end
+    english_sentence.join
+
+    # binding.pry
+
   end
 
   def braille_converter
-    letters = []
-    answer = []
-    letters << @work.split("\n")[0].chars
-    letters << @work.split("\n")[1].chars
-    letters << @work.split("\n")[2].chars
-    letters.each do |poo|
-      answer << poo.slice!(0,2).join
-
-      # binding.pry
-    # end
-    # letter <<  poo.chars.shift(2).join
+    @letters << @work.split("\n")[0].chars
+    @letters << @work.split("\n")[1].chars
+    @letters << @work.split("\n")[2].chars
+    while letters[0].empty? == false do
+      answer = []
+      @letters.each do |poo|
+        answer << poo.slice!(0,2).join
+      end
+      @answers << answer
     end
-    answer
-    # binding.pry
+    @answers
   end
 end
 

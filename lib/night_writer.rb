@@ -20,20 +20,24 @@ class NightWriter
     reader.read
   end
 
-  def write_to_file
-    writer.write(output)
+  def write_to_file_braille
+    writer.write_braille(output)
   end
 
   def translate_english_to_braille
     input = read_file.chomp.gsub(/[^\p{Alnum}\p{Space}-]/, '')
     @output = translator.english_to_braille(input)
-    # write_to_file
+    write_to_file_braille
   end
 
   def translate_braille_to_english
     input = read_file
     @output = translator.braille_to_english(input)
-    write_to_file
+    write_to_file_english
+  end
+
+  def write_to_file_english
+    writer.write_english(output)
   end
 
 end
