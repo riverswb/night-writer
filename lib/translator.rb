@@ -26,10 +26,16 @@ class Translator
     braille_sentence
   end
 
-  def braille_to_english(letter)
+  def braille_to_english(input)
+    poop = input.split("\n")
+    letter = []
+    letter << poop[0].chars.shift(2).join
+    letter << poop[1].chars.shift(2).join
+    letter << poop[2].chars.shift(2).join
     first = alphabet.alphanumeric.find_all do |key, value|
     	value[0] == letter[0]
     end.to_h
+    binding.pry
     second = first.find_all do |key, value|
     	value[1] == letter[1]
     end.to_h
@@ -39,5 +45,5 @@ class Translator
   end
 end
 
-Translator.new.english_to_braille("Brett and Mike")
+# Translator.new.english_to_braille("Brett and Mike")
 # Translator.new.braille_to_english(["0.","0.",".."])
