@@ -75,9 +75,5 @@ class AlphabetTest < Minitest::Test
     assert_equal result, alphabet.alphanumeric
   end
 
-  def test_it_converts_a_single_letter_to_braille
-    alphabet = Alphabet.new
-    result = 
-  end
 
 end

@@ -1,5 +1,6 @@
 require './lib/alphabet'
 
+
 class Translator
   attr_reader :alphabet, :work, :letters, :answers, :english_sentence
   def initialize
