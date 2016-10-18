@@ -39,16 +39,24 @@ class Translator
     third = second.find_all do |key, value|
     	value[2] == letter[2]
     end.to_h.keys.to_s
-    braille_to_english(input)
-
+    binding.pry
+    
   end
 
   def braille_converter
-    letter = []
-    @work.split("\n").map do |poo|
-    letter <<  poo.chars.shift(2).join
-    binding.pry
+    letters = []
+    answer = []
+    letters << @work.split("\n")[0].chars
+    letters << @work.split("\n")[1].chars
+    letters << @work.split("\n")[2].chars
+    letters.each do |poo|
+      answer << poo.slice!(0,2).join
+
+      # binding.pry
+    # end
+    # letter <<  poo.chars.shift(2).join
     end
+    answer
     # binding.pry
   end
 end
