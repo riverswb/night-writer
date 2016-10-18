@@ -1,9 +1,10 @@
 require './lib/alphabet'
 
 class Translator
-  attr_reader :alphabet
+  attr_reader :alphabet, :work
   def initialize
     @alphabet = Alphabet.new
+    @work = work
   end
 
   def english_to_braille(input)
@@ -27,21 +28,28 @@ class Translator
   end
 
   def braille_to_english(input)
-    poop = input.split("\n")
-    letter = []
-    letter << poop[0].chars.shift(2).join
-    letter << poop[1].chars.shift(2).join
-    letter << poop[2].chars.shift(2).join
+    @work = input
+    letter = braille_converter
     first = alphabet.alphanumeric.find_all do |key, value|
     	value[0] == letter[0]
     end.to_h
-    binding.pry
     second = first.find_all do |key, value|
     	value[1] == letter[1]
     end.to_h
     third = second.find_all do |key, value|
     	value[2] == letter[2]
     end.to_h.keys.to_s
+    braille_to_english(input)
+
+  end
+
+  def braille_converter
+    letter = []
+    @work.split("\n").map do |poo|
+    letter <<  poo.chars.shift(2).join
+    binding.pry
+    end
+    # binding.pry
   end
 end
 
