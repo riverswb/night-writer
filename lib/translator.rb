@@ -45,9 +45,17 @@ class Translator
       end.to_h.keys.to_s
       @english_sentence << third.gsub(/[^\p{Alnum}\p{Space}-]/, '')
     end
-    english_sentence.join
-
-    # binding.pry
+    sentence = []
+    english_sentence.each_with_index do |letter, index|
+      if letter == "shift"
+        english_sentence[index + 1].upcase!
+        english_sentence.delete_at(index)
+      else
+        sentence << letter
+      # binding.pry
+    end
+    sentence
+end
 
   end
 

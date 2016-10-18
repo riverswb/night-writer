@@ -9,7 +9,7 @@ class FileWriter
   def write_english(output)
     filename = ARGV[1]
     file = File.open(filename, "w")
-    file.puts output
+    file.puts output.join.to_s
     file.close
   end
 end
