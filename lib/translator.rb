@@ -37,6 +37,7 @@ class Translator
   def upcase_shift_letters(output)
     output.each_with_index do |letter, index|
       create_upcase(output, letter, index)
+      convert_number_to_braille(output, letter, index)
     end
   end
 
@@ -44,9 +45,16 @@ class Translator
     if letter == "shift"
       output[index + 1].upcase!
       output.delete_at(index)
-    else
-      letter
     end
+    output
+  end
+
+  def convert_number_to_braille(output, letter, index)
+    if letter == "#"
+      output[index + 1] = alphabet.numbers[output[index + 1]]
+      output.delete_at(index)
+    end
+    output
   end
 
   def braille_converter(input)
@@ -77,6 +85,4 @@ class Translator
       alphabet.braille[letter]
     end
   end
-
-
 end

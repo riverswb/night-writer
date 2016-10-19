@@ -1,3 +1,5 @@
+require 'simplecov'
+SimpleCov.start
 require 'minitest/autorun'
 require 'minitest/pride'
 require './lib/translator'
@@ -8,7 +10,6 @@ class TranslatorTest < Minitest::Test
   def test_translator_exists
     assert Translator.new
   end
-
 
   def test_it_can_convert_a_single_character_to_braille
     translator = Translator.new
@@ -71,23 +72,29 @@ class TranslatorTest < Minitest::Test
     assert_equal result, translator.upcase_shift_letters(["shift","a"])
   end
 
-  # def test_create_upcase
-  #   skip
-  #   translator = Translator.new
-  #   output = ["a", "shift", "b"]
-  #   # letter = "shift"
-  #   index = 1
-  #   result = "B"
-  #   assert_equal result, translator.create_upcase(output, "shift", index)
-  # end
+  def test_create_upcase
+    translator = Translator.new
+    output = ["a", "shift", "b"]
+    index = 1
+    result = ["a", "B"]
+    assert_equal result, translator.create_upcase(output, "shift", index)
+  end
+
+
+  def test_convert_number
+    translator = Translator.new
+    output = ["a", "#", "b"]
+    index = 1
+    result = ["a", "2"]
+    assert_equal result, translator.convert_number_to_braille(output, "#", index)
+  end
 
   def test_letter_to_answer
     translator = Translator.new
     input = [[".","0","0",".","0","."],
             ["0","0","0","0",".","0"],
-            ["0",".",".",".",".","."]
+            ["0",".",".",".",".","."]]
     result = [".0", "00", "0."]
     assert_equal result, translator.letter_to_answer(input)
   end
-
 end

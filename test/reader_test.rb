@@ -1,3 +1,5 @@
+require 'simplecov'
+SimpleCov.start
 require 'minitest/autorun'
 require 'minitest/pride'
 require './lib/reader'
@@ -14,6 +16,4 @@ class ReaderTest < Minitest::Test
     result = "the cat jumped over the moon and Fonzi jumped the shark and today is wednesday a\nnd then tomorrow is a new day"
     assert_equal result, reader.character_limit_80(insert)
   end
-
-
 end
