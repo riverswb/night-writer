@@ -53,16 +53,14 @@ class Translator
     letters = prepare_braille_arrays(input)
     answers = []
     while letters[0].empty? == false do
-      answer = []
-      letter_to_answer(letters, answer)
-      answers << answer
+      answers << letter_to_answer(letters)
     end
     answers
   end
 
-  def letter_to_answer(letters, answer)
-    letters.each do |letter|
-      answer << letter.slice!(0,2).join
+  def letter_to_answer(letters)
+    letters.map do |letter|
+      letter.slice!(0,2).join
     end
   end
 

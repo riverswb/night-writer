@@ -9,12 +9,11 @@ class TranslatorTest < Minitest::Test
     assert Translator.new
   end
 
-  
+
   def test_it_can_convert_a_single_character_to_braille
     translator = Translator.new
     result = ["0.","..",".."]
     assert_equal result, translator.english_to_braille("a")
-
   end
 
   def test_it_can_convert_a_single_capital_letter
@@ -70,6 +69,25 @@ class TranslatorTest < Minitest::Test
     translator = Translator.new
     result = ["A"]
     assert_equal result, translator.upcase_shift_letters(["shift","a"])
+  end
+
+  # def test_create_upcase
+  #   skip
+  #   translator = Translator.new
+  #   output = ["a", "shift", "b"]
+  #   # letter = "shift"
+  #   index = 1
+  #   result = "B"
+  #   assert_equal result, translator.create_upcase(output, "shift", index)
+  # end
+
+  def test_letter_to_answer
+    translator = Translator.new
+    input = [[".","0","0",".","0","."],
+            ["0","0","0","0",".","0"],
+            ["0",".",".",".",".","."]
+    result = [".0", "00", "0."]
+    assert_equal result, translator.letter_to_answer(input)
   end
 
 end
