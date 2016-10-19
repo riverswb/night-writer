@@ -57,4 +57,16 @@ class TranslatorTest < Minitest::Test
     assert_equal result, translator.braille_converter("0.\n..\n..")
   end
 
+  def test_compile_english_sentence_from_braille
+    translator = Translator.new
+    result = ["a"]
+    assert_equal result, translator.compile_english_sentence_from_braille([["0.","..",".."]])
+  end
+
+  def test_upcase_shift_letters
+    translator = Translator.new
+    result = ["A"]
+    assert_equal result, translator.upcase_shift_letters(["shift","a"])
+  end
+
 end
