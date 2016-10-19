@@ -23,8 +23,11 @@ class Writer
   def character_limit_160(output)
     if output[0].length > 160
       output.map do |string|
-        string.insert(160, "\n")
+        if string.length > 160
+          output << string.slice!(160..-1)
+        end
       end
+      output
     end
   end
   # def write_to_file_braille(output)
