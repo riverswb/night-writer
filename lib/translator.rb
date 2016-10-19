@@ -34,6 +34,17 @@ class Translator
     upcase_shift_letters(output)
   end
 
+  def upcase_shift_letters(output)
+    output.each_with_index do |letter, index|
+      if letter == "shift"
+        output[index + 1].upcase!
+        output.delete_at(index)
+      else
+        letter
+      end
+    end
+  end
+
   def braille_converter(input)
     letters = prepare_braille_arrays(input)
     answers = []
@@ -62,14 +73,4 @@ class Translator
   end
 
 
-  def upcase_shift_letters(output)
-    output.each_with_index do |letter, index|
-      if letter == "shift"
-        output[index + 1].upcase!
-        output.delete_at(index)
-      else
-        letter
-      end
-    end
-  end
 end
