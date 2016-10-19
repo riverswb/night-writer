@@ -39,5 +39,22 @@ class TranslatorTest < Minitest::Test
     assert_equal result, translator.braille_to_english(".00.0.\n0000.0\n0.....")
   end
 
+  def test_compile_braille_sentences
+    translator = Translator.new
+    result = [".00.0.", "0000.0", "0....."]
+    assert_equal result, translator.compile_braille_sentence(".00.0.", "0000.0", "0.....")
+  end
+
+  def test_prepare_braille_arrays
+    translator = Translator.new
+    result = [["0","."],[".","."],[".","."]]
+    assert_equal result, translator.prepare_braille_arrays("0.\n..\n..")
+  end
+
+  def test_braille_converter
+    translator = Translator.new
+    result = [["0.","..",".."]]
+    assert_equal result, translator.braille_converter("0.\n..\n..")
+  end
 
 end
