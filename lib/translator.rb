@@ -2,7 +2,7 @@ require './lib/alphabet'
 
 
 class Translator
-  attr_reader :alphabet, :answers
+  attr_reader :alphabet
   def initialize
     @alphabet = Alphabet.new
   end
@@ -36,12 +36,16 @@ class Translator
 
   def upcase_shift_letters(output)
     output.each_with_index do |letter, index|
-      if letter == "shift"
-        output[index + 1].upcase!
-        output.delete_at(index)
-      else
-        letter
-      end
+      create_upcase(output, letter, index)
+    end
+  end
+
+  def create_upcase(output, letter, index)
+    if letter == "shift"
+      output[index + 1].upcase!
+      output.delete_at(index)
+    else
+      letter
     end
   end
 
@@ -50,12 +54,16 @@ class Translator
     answers = []
     while letters[0].empty? == false do
       answer = []
-      letters.each do |letter|
-        answer << letter.slice!(0,2).join
-      end
+      letter_to_answer(letters, answer)
       answers << answer
     end
     answers
+  end
+
+  def letter_to_answer(letters, answer)
+    letters.each do |letter|
+      answer << letter.slice!(0,2).join
+    end
   end
 
   def prepare_braille_arrays(input)

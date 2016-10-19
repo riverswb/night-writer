@@ -1,6 +1,7 @@
 require 'minitest/autorun'
 require 'minitest/pride'
 require './lib/translator'
+require './lib/file_reader'
 
 class TranslatorTest < Minitest::Test
 
@@ -8,10 +9,12 @@ class TranslatorTest < Minitest::Test
     assert Translator.new
   end
 
+  
   def test_it_can_convert_a_single_character_to_braille
     translator = Translator.new
     result = ["0.","..",".."]
     assert_equal result, translator.english_to_braille("a")
+
   end
 
   def test_it_can_convert_a_single_capital_letter

@@ -15,5 +15,13 @@ class WriterTest < Minitest::Test
 
     assert_equal result, writer.character_limit_160(insert)
   end
+  # 
+  # def test_something
+  #   writer = Writer.new
+  #   binding.pry
+  #   writer.reader.read = "hello"
+  #   assert_equal "", translator.translate_english_to_braille
+  # end
+
 
 end

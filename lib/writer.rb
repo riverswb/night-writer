@@ -4,7 +4,7 @@ require './lib/file_reader'
 
 class Writer
 
-  attr_reader :reader, :writer, :translator
+  attr_accessor :reader, :writer, :translator
 
   def initialize
     @reader = FileReader.new
@@ -23,14 +23,17 @@ class Writer
   def character_limit_160(output)
     if output[0].length > 160
       output.map do |string|
-        if string.length > 160
-          output << string.slice!(160..-1)
-        end
+        string_limit(output, string)
       end
       output
     end
   end
   # def write_to_file_braille(output)
+  def string_limit(output, string)
+    if string.length > 160
+      output << string.slice!(160..-1)
+    end
+  end
   #   binding.pry
   #   writer.write_braille(output)
   # end

@@ -31,7 +31,7 @@ class Reader
   def character_limit_80(output)
     if output.length > 80
       output.insert(80, "\n")
-      end
+    end
       output
   end
 
