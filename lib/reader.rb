@@ -1,4 +1,6 @@
 require './lib/translator'
+require './lib/file_reader'
+require './lib/file_writer'
 
 class Reader
   attr_reader :reader, :writer, :translator
