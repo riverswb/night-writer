@@ -18,6 +18,6 @@ class NightReader
 
 end
 
-p "Created #{ARGV[1]} from #{ARGV[0]} containing #{NightReader.new.read_file_length} characters"
+p "Created #{ARGV[1]} from #{ARGV[0]} containing #{NightReader.new.read_file_length / 3} characters"
 
 Reader.new.translate_braille_to_english
