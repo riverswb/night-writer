@@ -1,13 +1,10 @@
 require './lib/alphabet'
 
+
 class Translator
-  attr_reader :alphabet, :work, :letters, :answers, :english_sentence
+  attr_reader :alphabet
   def initialize
     @alphabet = Alphabet.new
-    @work = work
-    @letters = []
-    @answers = []
-    @english_sentence = []
   end
 
   def english_to_braille(input)
@@ -32,57 +29,60 @@ class Translator
     end
 
   def braille_to_english(input)
-    @work = input
-    letters = braille_converter
-    compile_english_sentence_from_braille(letters)
-    upcase_shift_letters
+    letters = braille_converter(input)
+    output = compile_english_sentence_from_braille(letters)
+    upcase_shift_letters(output)
   end
 
-  def braille_converter
-    prepare_braille_arrays
-    while letters[0].empty? == false do
-      answer = []
-      @letters.each do |letter|
-        answer << letter.slice!(0,2).join
-      end
-      @answers << answer
+  def upcase_shift_letters(output)
+    output.each_with_index do |letter, index|
+      create_upcase(output, letter, index)
+      convert_number_to_braille(output, letter, index)
     end
-    @answers
   end
 
-  def prepare_braille_arrays
-    @letters << @work.split("\n")[0].chars
-    @letters << @work.split("\n")[1].chars
-    @letters << @work.split("\n")[2].chars
+  def create_upcase(output, letter, index)
+    if letter == "shift"
+      output[index + 1].upcase!
+      output.delete_at(index)
+    end
+    output
+  end
+
+  def convert_number_to_braille(output, letter, index)
+    if letter == "#"
+      output[index + 1] = alphabet.numbers[output[index + 1]]
+      output.delete_at(index)
+    end
+    output
+  end
+
+  def braille_converter(input)
+    letters = prepare_braille_arrays(input)
+    answers = []
+    while letters[0].empty? == false do
+      answers << letter_to_answer(letters)
+    end
+    answers
+  end
+
+  def letter_to_answer(letters)
+    letters.map do |letter|
+      letter.slice!(0,2).join
+    end
+  end
+
+  def prepare_braille_arrays(input)
+    letters = []
+    letters << input.split("\n")[0].chars
+    letters << input.split("\n")[1].chars
+    letters << input.split("\n")[2].chars
+    letters
   end
 
   def compile_english_sentence_from_braille(letters)
-    letters.each do |letter|
-      first = alphabet.alphanumeric.find_all do |key, value|
-      	value[0] == letter[0]
-      end.to_h
-      second = first.find_all do |key, value|
-      	value[1] == letter[1]
-      end.to_h
-      third = second.find_all do |key, value|
-      	value[2] == letter[2]
-      end.to_h.keys.to_s
-      @english_sentence << third.gsub(/[^\p{Alnum}\p{Space}!',-.?#]/, '')
-    end
-  end
-
-
-  def upcase_shift_letters
-    english_sentence.each_with_index do |letter, index|
-      if letter == "shift"
-        english_sentence[index + 1].upcase!
-        english_sentence.delete_at(index)
-      else
-        letter
-      end
+    letters.map do |letter|
+      alphabet.braille[letter]
     end
   end
 end
-
-# Translator.new.english_to_braille("Brett and Mike")
-# Translator.new.braille_to_english(["0.","0.",".."])

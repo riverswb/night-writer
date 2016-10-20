@@ -1,3 +1,5 @@
+require 'simplecov'
+SimpleCov.start
 require 'minitest/autorun'
 require 'minitest/pride'
 require './lib/alphabet'
@@ -71,13 +73,19 @@ class AlphabetTest < Minitest::Test
                 "." => ["..","00",".0"],
                 "?" => ["..","0.","00"],
                 " " => ["..","..",".."],
-                "#" => [".0",".0","00"]}
+                "#" => [".0",".0","00"],
+                "0" => [".0","00",".."],
+                "1" => ["0.","..",".."],
+                "2" => ["0.","0.",".."],
+                "3" => ["00","..",".."],
+                "4" => ["00",".0",".."],
+                "5" => ["0.",".0",".."],
+                "6" => ["00","0.",".."],
+                "7" => ["00","00",".."],
+                "8" => ["0.","00",".."],
+                "9" => [".0","0.",".."]}
     assert_equal result, alphabet.alphanumeric
   end
 
-  def test_it_converts_a_single_letter_to_braille
-    alphabet = Alphabet.new
-    result = 
-  end
 
 end
